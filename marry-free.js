@@ -1,7 +1,7 @@
 const { model, Schema, connect } = require("mongoose");
 const Discord = require("discord.js");
 
-const mongoDB = 'mongodb+srv://LooneyDiscordBotTutorals:LooneyDiscordBotTutorals123@looney-tutorals.tacfv.mongodb.net/LooneyTutorals/AC';
+const mongoDB = 'mongodb+srv://';
 
 let Cx = model("Nx", new Schema({ //สร้างดาต้า
     name: String,
@@ -34,7 +34,6 @@ module.exports = {
             case "start":
             case "st":
                 Cx.create({ name: 'ยังไม่พบข้อมูล', userID: message.author.id, age: 'ยังไม่พบข้อมูล', mateID: 'ยังไม่พบข้อมูล', img: 'https://cdn.discordapp.com/attachments/879421194145767485/887172124110884874/f0e085aa335ae8d0.png' })
-                //console.log(Cx)
                 message.channel.send('เริ่มโปรโมทตัวเอง')
                 break;
             case 'profile':
@@ -48,9 +47,7 @@ module.exports = {
                             mate: "แต่งงาน",
                             uss: "ไม่สมควรมีคู่"
                         }
-                        //console.log(undefind)
-                       
-                        //const userIDx = message.author.id;
+
                         const embed = new Discord.MessageEmbed()
                             .setAuthor('โปรไฟล์')
                             .setDescription(`**ชื่อ:** ${data.name}\n**อายุ:** ${data.age}\n**สถานะ:** ${undefind == 'ยังไม่พบข้อมูล' ? circles.single : undefind !== 'ยังไม่พบข้อมูล' ? circles.mate : circles.uss}`)
@@ -72,7 +69,6 @@ module.exports = {
                         user.name = args[1]
                         user.age = args[2]
                         user.url = args[2]
-                        //user.img = args[3]
                         user.save()
 
                         const embed1 = new Discord.MessageEmbed()
@@ -86,7 +82,6 @@ module.exports = {
                     })
                 break;
             case "edit-img":
-                //case "ed-i":
                 findUserOne({ id: message.author.id })
                     .then((data) => {
                         const image = data
@@ -107,20 +102,17 @@ module.exports = {
                 findUserOne({ id: message.author.id, mateID: message.mentions.id })
                     .then((data) => {
 
-
                         let marryMentions = message.mentions.members.first().id;
                         if (!marryMentions) return message.reply('คุณยังไม่ได้แท็ก')
 
                         let marryMember = message.member;
                         if (marryMember == marryMentions) return message.reply('คุณไม่สามารถแต่งกับตัวเองได้')
 
-
                         const matemarry = data;
 
                         matemarry.mateID = marryMentions;
 
                         matemarry.save()
-                        //console.log(matemarry)
                         message.channel.send('คุณได้แต่งงานแล้ว')
                     })
                 break;
